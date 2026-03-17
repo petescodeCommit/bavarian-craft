@@ -24,6 +24,8 @@ export default async function ProduktBearbeitenPage({ params }: { params: Promis
         tag: product.tag ?? "",
         emoji: product.emoji ?? "",
         imageUrl: product.imageUrl ?? "",
+        sizes: product.sizes ?? "",
+        colors: product.colors ?? "",
         active: product.active,
       }} />
     </div>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import MobileMenu from "./MobileMenu";
+import CartIcon from "./CartIcon";
 
 export default async function Navbar() {
   const supabase = await createClient();
@@ -27,6 +28,7 @@ export default async function Navbar() {
             ) : (
               <Link href="/auth/login" className="text-bc-muted hover:text-bc-text text-sm tracking-wide transition-colors">Anmelden</Link>
             )}
+            <CartIcon />
             <Link href="/konfigurieren" className="bg-bc-brown text-white px-5 py-2 text-sm font-semibold tracking-wide hover:bg-bc-brown-dark transition-colors">
               Jetzt gestalten
             </Link>

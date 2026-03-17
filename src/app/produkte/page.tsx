@@ -3,6 +3,7 @@ export const dynamic = "force-dynamic";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { getAdminDb } from "@/lib/db";
+import ProductCard from "@/components/ProductCard";
 
 export const metadata: Metadata = {
   title: "Leder-Schlüsselanhänger für Fahrzeuge",
@@ -42,29 +43,7 @@ export default async function ProduktePage() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
           {products.map((p) => (
-            <div key={p.id} className="card group">
-              <div className="bg-bc-cream h-52 flex items-center justify-center overflow-hidden group-hover:scale-105 transition-transform duration-500">
-                {p.imageUrl ? (
-                  <img src={p.imageUrl} alt={p.name} className="w-full h-full object-cover" />
-                ) : (
-                  <span className="text-7xl">{p.emoji}</span>
-                )}
-              </div>
-              <div className="p-6">
-                <div className="flex items-center justify-between mb-1">
-                  <h2 className="font-bold text-xl">{p.name}</h2>
-                  {p.tag && <span className="text-xs font-semibold text-bc-gold">{p.tag}</span>}
-                </div>
-                <div className="text-xs text-bc-muted mb-3">{p.material} · {p.size}</div>
-                <p className="text-bc-muted text-sm mb-5 leading-relaxed">{p.description}</p>
-                <div className="flex items-center justify-between">
-                  <span className="text-2xl font-bold">{Number(p.price).toFixed(2).replace(".", ",")} €</span>
-                  <Link href={`/konfigurieren?modell=${p.id}`} className="bg-bc-brown text-white px-4 py-2 text-sm font-semibold hover:bg-bc-brown-dark transition-colors">
-                    Personalisieren
-                  </Link>
-                </div>
-              </div>
-            </div>
+            <ProductCard key={p.id} product={p} />
           ))}
         </div>
 

@@ -18,6 +18,8 @@ model Product {
   tag         String?
   emoji       String?
   imageUrl    String?
+  sizes       String?  // comma-separated, e.g. "7×4 cm,8×5 cm,9×6 cm"
+  colors      String?  // comma-separated, e.g. "Naturbraun,Dunkelbraun,Schwarz"
   active      Boolean  @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

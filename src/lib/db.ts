@@ -20,6 +20,8 @@ export interface Product {
   tag: string | null;
   emoji: string | null;
   imageUrl: string | null;
+  sizes: string | null;
+  colors: string | null;
   active: boolean;
   created_at: string;
   updated_at: string;

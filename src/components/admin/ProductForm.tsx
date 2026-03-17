@@ -14,6 +14,8 @@ interface ProductData {
   tag: string;
   emoji: string;
   imageUrl: string;
+  sizes: string;
+  colors: string;
   active: boolean;
 }
 
@@ -31,6 +33,8 @@ export default function ProductForm({ product }: { product?: ProductData }) {
     tag: product?.tag ?? "",
     emoji: product?.emoji ?? "🟫",
     imageUrl: product?.imageUrl ?? "",
+    sizes: product?.sizes ?? "",
+    colors: product?.colors ?? "",
     active: product?.active ?? true,
     ...(product?.id ? { id: product.id } : {}),
   });
@@ -171,8 +175,20 @@ export default function ProductForm({ product }: { product?: ProductData }) {
               className="w-full border border-gray-200 px-3 py-2.5 focus:border-bc-brown focus:outline-none text-sm" />
           </div>
           <div>
-            <label className="text-xs font-semibold text-bc-muted tracking-wide block mb-1.5">Größe</label>
+            <label className="text-xs font-semibold text-bc-muted tracking-wide block mb-1.5">Standardgröße</label>
             <input name="size" value={form.size} onChange={handleChange}
+              className="w-full border border-gray-200 px-3 py-2.5 focus:border-bc-brown focus:outline-none text-sm" />
+          </div>
+          <div className="col-span-2">
+            <label className="text-xs font-semibold text-bc-muted tracking-wide block mb-1.5">Verfügbare Größen <span className="font-normal text-bc-muted">(kommagetrennt, z.B. Klein 5×3 cm,Mittel 7×4 cm,Groß 9×5 cm)</span></label>
+            <input name="sizes" value={form.sizes} onChange={handleChange}
+              placeholder="Klein 5×3 cm,Mittel 7×4 cm,Groß 9×5 cm"
+              className="w-full border border-gray-200 px-3 py-2.5 focus:border-bc-brown focus:outline-none text-sm" />
+          </div>
+          <div className="col-span-2">
+            <label className="text-xs font-semibold text-bc-muted tracking-wide block mb-1.5">Verfügbare Farben <span className="font-normal text-bc-muted">(kommagetrennt, z.B. Naturbraun,Dunkelbraun,Schwarz)</span></label>
+            <input name="colors" value={form.colors} onChange={handleChange}
+              placeholder="Naturbraun,Dunkelbraun,Schwarz"
               className="w-full border border-gray-200 px-3 py-2.5 focus:border-bc-brown focus:outline-none text-sm" />
           </div>
           <div>
