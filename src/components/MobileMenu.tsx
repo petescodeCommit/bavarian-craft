@@ -23,6 +23,7 @@ export default function MobileMenu({ user }: Props) {
         <div className="absolute top-16 left-0 right-0 bg-white border-b border-bc-border md:hidden px-4 py-4 flex flex-col gap-4 z-50">
           <Link href="/produkte" className="text-bc-muted text-sm" onClick={() => setOpen(false)}>Produkte</Link>
           <Link href="/konfigurieren" className="text-bc-muted text-sm" onClick={() => setOpen(false)}>Konfigurator</Link>
+          <Link href="/blog" className="text-bc-muted text-sm" onClick={() => setOpen(false)}>Blog</Link>
           {user?.isAdmin && <Link href="/admin" className="text-bc-gold text-sm font-semibold" onClick={() => setOpen(false)}>Admin</Link>}
           {user ? (
             <Link href="/konto" className="text-bc-muted text-sm" onClick={() => setOpen(false)}>Mein Konto</Link>

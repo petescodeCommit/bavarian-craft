@@ -2,6 +2,8 @@ import Hero from "@/components/Hero";
 import FeaturedProducts from "@/components/FeaturedProducts";
 import HowItWorks from "@/components/HowItWorks";
 import Testimonials from "@/components/Testimonials";
+import BlogSlideshow from "@/components/BlogSlideshow";
+import { blogPosts } from "@/lib/blog";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -16,6 +18,7 @@ export default function Home() {
       <Hero />
       <FeaturedProducts />
       <HowItWorks />
+      <BlogSlideshow posts={blogPosts} />
       <Testimonials />
     </>
   );

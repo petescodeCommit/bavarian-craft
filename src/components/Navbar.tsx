@@ -18,6 +18,7 @@ export default async function Navbar() {
           <div className="hidden md:flex items-center gap-8">
             <Link href="/produkte" className="text-bc-muted hover:text-bc-text text-sm tracking-wide transition-colors">Produkte</Link>
             <Link href="/konfigurieren" className="text-bc-muted hover:text-bc-text text-sm tracking-wide transition-colors">Konfigurator</Link>
+            <Link href="/blog" className="text-bc-muted hover:text-bc-text text-sm tracking-wide transition-colors">Blog</Link>
             {isAdmin && (
               <Link href="/admin" className="text-bc-gold hover:text-bc-gold-dark text-sm tracking-wide transition-colors font-semibold">Admin</Link>
             )}
