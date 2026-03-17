@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Configurator from "@/components/Configurator";
 import CustomRequestForm from "@/components/CustomRequestForm";
 
@@ -18,6 +19,15 @@ export default function KonfigurierenPage() {
           <p className="text-bc-muted text-lg">
             Wähle dein Fahrzeug, personalisiere die Rückseite und sieh das Ergebnis live.
           </p>
+          <div className="mt-8 max-w-3xl mx-auto overflow-hidden rounded-sm">
+            <Image
+              src="/images/banner-konfigurator.png"
+              alt="Bavarian Craft Konfigurator – Schlüsselanhänger personalisieren"
+              width={900}
+              height={300}
+              className="w-full object-cover"
+            />
+          </div>
         </div>
         <Configurator />
         <CustomRequestForm />
