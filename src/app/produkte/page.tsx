@@ -6,8 +6,15 @@ import { getAdminDb } from "@/lib/db";
 import ProduktGrid from "@/components/ProduktGrid";
 
 export const metadata: Metadata = {
-  title: "Leder-Schlüsselanhänger für Fahrzeuge",
-  description: "Alle Leder-Schlüsselanhänger von Bavarian Craft – Klassiker, Premium und Vintage. Mit Fahrzeug-Motiv und persönlicher Gravur auf der Rückseite.",
+  title: "Leder-Schlüsselanhänger für Fahrzeuge – Bavarian Craft",
+  description: "Personalisierte Leder-Schlüsselanhänger mit Fahrzeug-Motiv – VW Golf, VW Käfer, BMW und mehr. Handgefertigt in Bayern, mit Gravur auf der Rückseite.",
+  alternates: { canonical: "https://bavarian-craft.vercel.app/produkte" },
+  openGraph: {
+    type: "website",
+    url: "https://bavarian-craft.vercel.app/produkte",
+    title: "Leder-Schlüsselanhänger für Fahrzeuge – Bavarian Craft",
+    description: "Personalisierte Leder-Schlüsselanhänger mit Fahrzeug-Motiv. Handgefertigt in Bayern.",
+  },
 };
 
 const vehicles = [

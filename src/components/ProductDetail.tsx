@@ -19,6 +19,9 @@ interface Product {
   colors: string | null;
 }
 
+const LEDERFARBEN_IMG = "/images/lederfarben.png";
+const LARGE_SIZE_SURCHARGE = 2;
+
 export default function ProductDetail({ product }: { product: Product }) {
   const { add } = useCart();
 
@@ -34,13 +37,24 @@ export default function ProductDetail({ product }: { product: Product }) {
   const [selectedColor, setSelectedColor] = useState(colorOptions[0] ?? "");
   const [backText, setBackText] = useState("");
   const [added, setAdded] = useState(false);
+  const [imgIndex, setImgIndex] = useState(0);
+
+  const images = [
+    ...(product.imageUrl ? [{ src: product.imageUrl, alt: product.name }] : []),
+    { src: LEDERFARBEN_IMG, alt: "Lederfarben Übersicht – Rohleder, Bambus, Gegerbtes Braun, Grau" },
+  ];
+
+  // +2€ surcharge for the largest size option
+  const largeSize = sizeOptions[sizeOptions.length - 1];
+  const isLargeSelected = selectedSize === largeSize && sizeOptions.length > 1;
+  const displayPrice = Number(product.price) + (isLargeSelected ? LARGE_SIZE_SURCHARGE : 0);
 
   function handleAdd() {
     add({
       productId: product.id,
       productName: product.name,
       productImage: product.imageUrl,
-      price: product.price,
+      price: displayPrice,
       size: selectedSize,
       color: selectedColor,
       backText,
@@ -60,12 +74,54 @@ export default function ProductDetail({ product }: { product: Product }) {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
 
-          {/* Image */}
-          <div className="bg-bc-cream w-full aspect-square flex items-center justify-center overflow-hidden">
-            {product.imageUrl ? (
-              <img src={product.imageUrl} alt={product.name} className="w-full h-full object-cover" />
-            ) : (
-              <span className="text-8xl sm:text-9xl">{product.emoji}</span>
+          {/* Image slideshow */}
+          <div>
+            <div className="bg-bc-cream w-full aspect-square flex items-center justify-center overflow-hidden relative">
+              {images.length > 0 ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={images[imgIndex].src}
+                  alt={images[imgIndex].alt}
+                  className={`w-full h-full ${imgIndex === images.length - 1 ? "object-contain p-4" : "object-cover"}`}
+                />
+              ) : (
+                <span className="text-8xl sm:text-9xl">{product.emoji}</span>
+              )}
+              {images.length > 1 && (
+                <>
+                  <button
+                    onClick={() => setImgIndex((i) => (i - 1 + images.length) % images.length)}
+                    className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white w-8 h-8 flex items-center justify-center text-bc-text transition-colors"
+                    aria-label="Vorheriges Bild"
+                  >
+                    ‹
+                  </button>
+                  <button
+                    onClick={() => setImgIndex((i) => (i + 1) % images.length)}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white w-8 h-8 flex items-center justify-center text-bc-text transition-colors"
+                    aria-label="Nächstes Bild"
+                  >
+                    ›
+                  </button>
+                </>
+              )}
+            </div>
+            {/* Thumbnails */}
+            {images.length > 1 && (
+              <div className="flex gap-2 mt-2">
+                {images.map((img, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setImgIndex(i)}
+                    className={`w-14 h-14 overflow-hidden border-2 transition-colors ${
+                      i === imgIndex ? "border-bc-brown" : "border-transparent"
+                    }`}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={img.src} alt={img.alt} className={`w-full h-full ${i === images.length - 1 ? "object-contain p-1" : "object-cover"}`} />
+                  </button>
+                ))}
+              </div>
             )}
           </div>
 
@@ -84,7 +140,7 @@ export default function ProductDetail({ product }: { product: Product }) {
 
             {/* Price */}
             <div className="text-2xl sm:text-3xl font-bold mb-4">
-              {Number(product.price).toFixed(2).replace(".", ",")} €
+              {displayPrice.toFixed(2).replace(".", ",")} €
             </div>
 
             {/* Description */}
@@ -121,7 +177,7 @@ export default function ProductDetail({ product }: { product: Product }) {
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {colorOptions.map((c) => (
-                      <button key={c} onClick={() => setSelectedColor(c)}
+                      <button key={c} onClick={() => { setSelectedColor(c); setImgIndex(images.length - 1); }}
                         className={`px-3 py-1.5 text-sm border transition-colors ${
                           selectedColor === c ? "border-bc-brown bg-bc-brown text-white" : "border-bc-border text-bc-muted hover:border-bc-brown"
                         }`}>
@@ -129,6 +185,7 @@ export default function ProductDetail({ product }: { product: Product }) {
                       </button>
                     ))}
                   </div>
+                  <p className="text-xs text-bc-muted mt-1">→ Alle Farben im Bild ansehen</p>
                 </div>
               )}
 
