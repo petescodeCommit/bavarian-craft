@@ -17,6 +17,7 @@ model Product {
   size        String
   tag         String?
   emoji       String?
+  imageUrl    String?
   active      Boolean  @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -26,24 +27,25 @@ model Product {
   @@map("products")
 }
 
-model Customer {
-  id        Int      @id @default(autoincrement())
+model UserProfile {
+  id        String   @id // Supabase auth user ID
   email     String   @unique
-  firstName String
-  lastName  String
+  firstName String?
+  lastName  String?
   phone     String?
+  role      UserRole @default(CUSTOMER)
   createdAt DateTime @default(now())
 
   orders    Order[]
 
-  @@map("customers")
+  @@map("user_profiles")
 }
 
 model Order {
   id              Int         @id @default(autoincrement())
   orderNumber     String      @unique
-  customerId      Int
-  customer        Customer    @relation(fields: [customerId], references: [id])
+  userId          String
+  user            UserProfile @relation(fields: [userId], references: [id])
   status          OrderStatus @default(PENDING)
   totalAmount     Decimal     @db.Decimal(10, 2)
   shippingName    String
@@ -84,4 +86,9 @@ enum OrderStatus {
   SHIPPED
   DELIVERED
   CANCELLED
+}
+
+enum UserRole {
+  CUSTOMER
+  ADMIN
 }
