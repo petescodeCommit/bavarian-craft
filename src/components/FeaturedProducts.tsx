@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 
 const products = [
   {
@@ -7,7 +6,7 @@ const products = [
     name: "Leder-Klassiker",
     description: "Glattes Rindsleder, schlicht und zeitlos. Vorderseite mit Fahrzeug-Motiv, Rückseite personalisiert.",
     price: "24,90 €",
-    image: "/images/product-leder-klassiker.png",
+    emoji: "🟫",
     tag: "Bestseller",
   },
   {
@@ -15,7 +14,7 @@ const products = [
     name: "Leder-Premium",
     description: "Genarbtes Büffelleder mit besonderer Textur. Tiefere Prägung, edles Finish.",
     price: "34,90 €",
-    image: "/images/product-leder-premium.png",
+    emoji: "🏅",
     tag: "Premium",
   },
   {
@@ -23,7 +22,7 @@ const products = [
     name: "Leder-Vintage",
     description: "Antik-behandeltes Leder mit natürlichem Used-Look. Jedes Stück ein Unikat.",
     price: "29,90 €",
-    image: "/images/product-leder-vintage.png",
+    emoji: "⌚",
     tag: "Beliebt",
   },
 ];
@@ -44,14 +43,8 @@ export default function FeaturedProducts() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {products.map((p) => (
             <div key={p.id} className="card group">
-              <div className="bg-bc-cream h-52 flex items-center justify-center overflow-hidden">
-                <Image
-                  src={p.image}
-                  alt={p.name}
-                  width={400}
-                  height={208}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                />
+              <div className="bg-bc-cream h-52 flex items-center justify-center text-7xl group-hover:scale-105 transition-transform duration-500">
+                {p.emoji}
               </div>
               <div className="p-6">
                 <div className="flex items-center justify-between mb-2">

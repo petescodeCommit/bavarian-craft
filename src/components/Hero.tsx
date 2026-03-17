@@ -1,12 +1,10 @@
 import Link from "next/link";
-import Image from "next/image";
 
 export default function Hero() {
   return (
-    <section className="bg-bc-cream-dark overflow-hidden">
+    <section className="bg-bc-cream-dark">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-36">
-        <div className="flex items-center gap-16">
-        <div className="max-w-2xl flex-shrink-0">
+        <div className="max-w-2xl">
           <span className="label">Handgefertigt in Bayern</span>
           <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-6 leading-[1.08]">
             Leder-Schlüsselanhänger<br />
@@ -29,17 +27,6 @@ export default function Hero() {
             <span><span className="text-bc-gold mr-2">✓</span>Kostenloser Versand ab 30€</span>
             <span><span className="text-bc-gold mr-2">✓</span>2–4 Werktage Lieferzeit</span>
           </div>
-        </div>
-        <div className="hidden lg:block flex-1 relative">
-          <Image
-            src="/images/banner-hero.png"
-            alt="Handgefertigte Leder-Schlüsselanhänger von Bavarian Craft"
-            width={560}
-            height={420}
-            className="rounded-sm object-cover w-full"
-            priority
-          />
-        </div>
         </div>
       </div>
     </section>
