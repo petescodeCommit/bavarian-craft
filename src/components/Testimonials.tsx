@@ -1,45 +1,25 @@
 const reviews = [
-  {
-    name: "Maria S.",
-    location: "München",
-    rating: 5,
-    text: "Der Holz-Klassiker mit dem Namen meines Mannes ist wunderschön geworden! Die Gravur ist sehr sauber und das Holz fühlt sich hochwertig an.",
-  },
-  {
-    name: "Thomas B.",
-    location: "Augsburg",
-    rating: 5,
-    text: "Schnelle Lieferung, tolle Verpackung und der Leder-Anhänger übertrifft alle Erwartungen. Habe gleich noch einen für meine Schwester bestellt.",
-  },
-  {
-    name: "Julia M.",
-    location: "Regensburg",
-    rating: 5,
-    text: "Das Bayern-Wappen-Design ist ein Blickfang. Alle fragen woher ich es habe. Perfektes Souvenir für Bayern-Fans!",
-  },
+  { name: "Markus R.", location: "München", vehicle: "BMW M3", text: "Einfach perfekt. Das Leder fühlt sich hochwertig an und die Prägung ist sehr sauber. Mein BMW-Schlüsselanhänger ist ein echter Hingucker." },
+  { name: "Sandra K.", location: "Stuttgart", vehicle: "Porsche 911", text: "Schnelle Lieferung, schöne Verpackung. Der Vintage-Lederanhänger mit Porsche-Motiv ist genau das was ich gesucht habe." },
+  { name: "Georg F.", location: "Straubing", vehicle: "Fendt Traktor", text: "Als Landwirt war ich skeptisch – aber die Qualität hat mich überzeugt. Der Traktor-Anhänger ist robust und sieht klasse aus!" },
 ];
 
 export default function Testimonials() {
   return (
-    <section className="py-24 bg-gray-50">
+    <section className="py-24 bg-bc-cream">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-14">
-          <p className="text-bavarian-copper text-xs font-semibold tracking-widest uppercase mb-3">Kundenstimmen</p>
+          <span className="label">Kundenstimmen</span>
           <h2 className="section-title mb-0">Was unsere Kunden sagen</h2>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {reviews.map((review, index) => (
-            <div key={index} className="bg-white border border-gray-100 p-8">
-              <div className="flex text-bavarian-copper text-lg mb-5 tracking-widest">
-                {"★".repeat(review.rating)}
-              </div>
-              <p className="text-gray-600 text-sm leading-relaxed mb-8">
-                &ldquo;{review.text}&rdquo;
-              </p>
-              <div className="border-t border-gray-100 pt-5">
-                <div className="font-semibold text-sm tracking-wide">{review.name}</div>
-                <div className="text-gray-400 text-xs tracking-wide mt-0.5">{review.location}</div>
+          {reviews.map((r, i) => (
+            <div key={i} className="bg-white border border-bc-border p-8">
+              <div className="text-bc-gold text-lg mb-4">★★★★★</div>
+              <p className="text-bc-muted text-sm leading-relaxed mb-6">&ldquo;{r.text}&rdquo;</p>
+              <div className="border-t border-bc-border pt-5">
+                <div className="font-semibold text-sm">{r.name}</div>
+                <div className="text-bc-muted text-xs mt-0.5">{r.location} · {r.vehicle}</div>
               </div>
             </div>
           ))}

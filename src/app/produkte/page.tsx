@@ -2,151 +2,114 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Alle Schlüsselanhänger",
+  title: "Leder-Schlüsselanhänger für Fahrzeuge",
   description:
-    "Entdecke unsere handgefertigten Schlüsselanhänger aus Bayern – Holz, Leder und traditionelle Designs, alle personalisierbar mit deinem Text.",
+    "Alle Leder-Schlüsselanhänger von Bavarian Craft – Klassiker, Premium und Vintage. Mit Fahrzeug-Motiv und persönlicher Gravur auf der Rückseite.",
 };
 
 const products = [
   {
     id: 1,
-    name: "Holz-Klassiker",
-    description:
-      "Aus nachhaltigem Buchenholz gefertigt. Die Gravur wird mit einem Laser präzise eingearbeitet und ist dauerhaft haltbar.",
-    price: "19,90 €",
-    emoji: "🪵",
-    material: "Buchenholz",
-    size: "6 × 3 cm",
+    name: "Leder-Klassiker",
+    description: "Glattes Rindsleder aus Bayern. Die Vorderseite zeigt dein Fahrzeug-Motiv, die Rückseite wird mit deinem Text geprägt.",
+    price: "24,90 €",
+    emoji: "🟫",
+    material: "Rindsleder",
+    size: "7 × 4 cm",
     tag: "Bestseller",
-    tagColor: "bg-yellow-100 text-yellow-800",
-    features: ["Lasergravur", "Nachhaltig", "Bis 30 Zeichen"],
+    features: ["Heißprägung", "Rindsleder", "2 Zeilen Text"],
   },
   {
     id: 2,
-    name: "Leder-Edition",
-    description:
-      "Echtes Rindsleder aus Bayern, langlebig und mit natürlicher Patina. Die Prägung verleiht deinem Text eine edle Optik.",
-    price: "24,90 €",
-    emoji: "🟫",
-    material: "Echtleder",
-    size: "7 × 3,5 cm",
-    tag: "Neu",
-    tagColor: "bg-green-100 text-green-800",
-    features: ["Heißprägung", "Echtleder", "Bis 25 Zeichen"],
+    name: "Leder-Premium",
+    description: "Genarbtes Büffelleder mit natürlicher Textur. Tiefere Prägung, edles Finish – für Anspruchsvolle.",
+    price: "34,90 €",
+    emoji: "🏅",
+    material: "Büffelleder",
+    size: "7 × 4 cm",
+    tag: "Premium",
+    features: ["Tiefprägung", "Büffelleder", "2 Zeilen Text"],
   },
   {
     id: 3,
-    name: "Bayern-Wappen",
-    description:
-      "Das traditionelle bayerische Rautenmuster als Hintergrund, kombiniert mit deiner persönlichen Gravur. Ein echter Hingucker.",
-    price: "22,90 €",
-    emoji: "🏰",
-    material: "Ahornholz",
-    size: "6 × 4 cm",
-    tag: "Beliebt",
-    tagColor: "bg-blue-100 text-blue-800",
-    features: ["Lasergravur", "Bayerndesign", "Bis 20 Zeichen"],
-  },
-  {
-    id: 4,
-    name: "Mini-Herz",
-    description:
-      "Herzförmiger Holzanhänger – perfekt als romantisches Geschenk oder Valentinstag-Überraschung mit persönlicher Note.",
-    price: "17,90 €",
-    emoji: "❤️",
-    material: "Kirschholz",
-    size: "5 × 5 cm",
-    tag: "Geschenk-Tipp",
-    tagColor: "bg-pink-100 text-pink-800",
-    features: ["Lasergravur", "Herzform", "Bis 15 Zeichen"],
-  },
-  {
-    id: 5,
-    name: "Edelstahl-Pro",
-    description:
-      "Robuster Edelstahlanhänger für alle, die Langlebigkeit schätzen. Wetterfest und kratzresistent.",
+    name: "Leder-Vintage",
+    description: "Antik-behandeltes Leder mit natürlichem Used-Look. Jedes Stück ist ein Unikat mit einzigartiger Patina.",
     price: "29,90 €",
-    emoji: "🔩",
-    material: "Edelstahl V2A",
-    size: "6 × 2,5 cm",
-    tag: "Premium",
-    tagColor: "bg-gray-100 text-gray-800",
-    features: ["Lasergravur", "Edelstahl", "Bis 30 Zeichen"],
+    emoji: "⌚",
+    material: "Antik-Leder",
+    size: "7 × 4 cm",
+    tag: "Beliebt",
+    features: ["Heißprägung", "Antik-Leder", "Unikat"],
   },
-  {
-    id: 6,
-    name: "Weihnachts-Edition",
-    description:
-      "Tannenbaumförmiger Anhänger aus Fichtenholz – das ideale Weihnachtsgeschenk mit persönlichem Touch.",
-    price: "18,90 €",
-    emoji: "🎄",
-    material: "Fichtenholz",
-    size: "4 × 6 cm",
-    tag: "Saisonal",
-    tagColor: "bg-red-100 text-red-800",
-    features: ["Lasergravur", "Weihnachtsform", "Bis 15 Zeichen"],
-  },
+];
+
+const vehicles = [
+  "BMW", "Mercedes-Benz", "Porsche", "Audi", "Volkswagen",
+  "Harley-Davidson", "Ducati", "KTM", "BMW Motorrad",
+  "Ferrari", "Lamborghini", "Alfa Romeo",
+  "Fendt", "John Deere", "Claas",
+  "Ford", "Chevrolet", "Jeep", "Toyota", "Honda",
 ];
 
 export default function ProduktePage() {
   return (
     <div className="py-16">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="section-title">Alle Schlüsselanhänger</h1>
-          <p className="text-gray-500 text-lg max-w-2xl mx-auto">
-            Handgefertigt in Bayern, personalisiert für dich. Wähle dein
-            Lieblingsmodell und gestalte es nach deinen Wünschen.
+        <div className="mb-14">
+          <span className="text-bc-gold text-xs font-semibold tracking-widest uppercase mb-3 block">Lederware</span>
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
+            Leder-Schlüsselanhänger<br />für dein Fahrzeug
+          </h1>
+          <p className="text-bc-muted text-lg max-w-2xl">
+            Handgefertigte Lederanhänger mit über 25 Fahrzeug-Motiven. Rückseite personalisiert mit deinem Namen oder Text.
           </p>
         </div>
 
-        {/* Product grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {products.map((product) => (
-            <div key={product.id} className="card group">
-              <div className="bg-bavarian-cream h-48 flex items-center justify-center text-6xl group-hover:scale-110 transition-transform duration-300">
-                {product.emoji}
+        {/* Products */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+          {products.map((p) => (
+            <div key={p.id} className="card group">
+              <div className="bg-bc-cream h-52 flex items-center justify-center text-7xl group-hover:scale-105 transition-transform duration-500">
+                {p.emoji}
               </div>
               <div className="p-6">
                 <div className="flex items-center justify-between mb-1">
-                  <h2 className="font-bold text-xl">{product.name}</h2>
-                  <span
-                    className={`text-xs font-semibold px-2 py-1 rounded-full ${product.tagColor}`}
-                  >
-                    {product.tag}
-                  </span>
+                  <h2 className="font-bold text-xl">{p.name}</h2>
+                  <span className="text-xs font-semibold text-bc-gold">{p.tag}</span>
                 </div>
-                <div className="text-xs text-gray-400 mb-3">
-                  {product.material} · {product.size}
-                </div>
-                <p className="text-gray-500 text-sm mb-4 leading-relaxed">
-                  {product.description}
-                </p>
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {product.features.map((f) => (
-                    <span
-                      key={f}
-                      className="bg-bavarian-cream text-bavarian-dark text-xs px-2 py-1 rounded-full"
-                    >
-                      {f}
-                    </span>
+                <div className="text-xs text-bc-muted mb-3">{p.material} · {p.size}</div>
+                <p className="text-bc-muted text-sm mb-4 leading-relaxed">{p.description}</p>
+                <div className="flex flex-wrap gap-2 mb-5">
+                  {p.features.map((f) => (
+                    <span key={f} className="bg-bc-cream text-bc-muted text-xs px-2 py-1">{f}</span>
                   ))}
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-2xl font-bold text-bavarian-blue">
-                    {product.price}
-                  </span>
-                  <Link
-                    href={`/konfigurieren?modell=${product.id}`}
-                    className="btn-primary text-sm"
-                  >
+                  <span className="text-2xl font-bold">{p.price}</span>
+                  <Link href={`/konfigurieren?modell=${p.id}`} className="bg-bc-brown text-white px-4 py-2 text-sm font-semibold hover:bg-bc-brown-dark transition-colors">
                     Personalisieren
                   </Link>
                 </div>
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Vehicle list for SEO */}
+        <div className="bg-white border border-bc-border p-8">
+          <h2 className="font-bold text-xl mb-4">Verfügbare Fahrzeug-Motive</h2>
+          <p className="text-bc-muted text-sm mb-6">Wir bieten Designs für alle gängigen Marken – darunter:</p>
+          <div className="flex flex-wrap gap-2">
+            {vehicles.map((v) => (
+              <Link
+                key={v}
+                href={`/konfigurieren?fahrzeug=${encodeURIComponent(v)}`}
+                className="text-sm px-3 py-1.5 border border-bc-border text-bc-muted hover:border-bc-brown hover:text-bc-text transition-colors"
+              >
+                {v}
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </div>

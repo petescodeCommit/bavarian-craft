@@ -3,29 +3,24 @@
 @tailwind utilities;
 
 @layer base {
-  html {
-    scroll-behavior: smooth;
-  }
-
-  body {
-    @apply bg-white text-bavarian-black;
-  }
+  html { scroll-behavior: smooth; }
+  body { @apply bg-bc-cream text-bc-text; }
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-bavarian-black text-bavarian-white px-6 py-3 rounded-none font-semibold tracking-wide hover:bg-bavarian-copper transition-colors duration-200;
+    @apply bg-bc-brown text-white px-6 py-3 font-semibold tracking-wide hover:bg-bc-brown-dark transition-colors duration-200;
   }
-
   .btn-secondary {
-    @apply border border-bavarian-black text-bavarian-black px-6 py-3 rounded-none font-semibold tracking-wide hover:bg-bavarian-black hover:text-white transition-colors duration-200;
+    @apply border border-bc-brown text-bc-brown px-6 py-3 font-semibold tracking-wide hover:bg-bc-brown hover:text-white transition-colors duration-200;
   }
-
   .section-title {
-    @apply text-3xl md:text-4xl font-bold tracking-tight text-bavarian-black mb-4;
+    @apply text-3xl md:text-4xl font-bold tracking-tight text-bc-text mb-4;
   }
-
   .card {
-    @apply bg-white border border-gray-100 hover:border-bavarian-copper transition-colors duration-300 overflow-hidden;
+    @apply bg-white border border-bc-border hover:border-bc-gold transition-colors duration-300 overflow-hidden;
+  }
+  .label {
+    @apply text-bc-gold text-xs font-semibold tracking-widest uppercase mb-3 block;
   }
 }
