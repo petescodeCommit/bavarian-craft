@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { createClient } from "@/lib/supabase/client";
 
 interface ProductData {
   id?: number;
@@ -65,14 +64,18 @@ export default function ProductForm({ product }: { product?: ProductData }) {
   async function uploadImage(): Promise<string | null> {
     if (!imageFile) return form.imageUrl || null;
     setUploading(true);
-    const supabase = createClient();
-    const ext = imageFile.name.split(".").pop();
-    const path = `products/${form.slug}-${Date.now()}.${ext}`;
-    const { error } = await supabase.storage.from("products").upload(path, imageFile, { upsert: true });
+    const fd = new FormData();
+    fd.append("file", imageFile);
+    fd.append("slug", form.slug);
+    const res = await fetch("/api/admin/upload", { method: "POST", body: fd });
     setUploading(false);
-    if (error) { setError("Bild-Upload fehlgeschlagen: " + error.message); return null; }
-    const { data } = supabase.storage.from("products").getPublicUrl(path);
-    return data.publicUrl;
+    if (!res.ok) {
+      const data = await res.json();
+      setError("Bild-Upload fehlgeschlagen: " + (data.error ?? res.statusText));
+      return null;
+    }
+    const { url } = await res.json();
+    return url;
   }
 
   async function handleSubmit(e: React.FormEvent) {
