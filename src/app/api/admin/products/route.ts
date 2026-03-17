@@ -23,7 +23,7 @@ export async function POST(request: Request) {
     name: data.name, slug: data.slug, description: data.description,
     price: data.price, material: data.material, size: data.size,
     tag: data.tag || null, emoji: data.emoji || null,
-    image_url: data.imageUrl || null, active: data.active ?? true,
+    imageUrl: data.imageUrl || null, active: data.active ?? true,
   }).select().single();
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   return NextResponse.json(product, { status: 201 });

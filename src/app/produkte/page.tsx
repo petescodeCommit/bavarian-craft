@@ -44,8 +44,8 @@ export default async function ProduktePage() {
           {products.map((p) => (
             <div key={p.id} className="card group">
               <div className="bg-bc-cream h-52 flex items-center justify-center overflow-hidden group-hover:scale-105 transition-transform duration-500">
-                {p.image_url ? (
-                  <img src={p.image_url} alt={p.name} className="w-full h-full object-cover" />
+                {p.imageUrl ? (
+                  <img src={p.imageUrl} alt={p.name} className="w-full h-full object-cover" />
                 ) : (
                   <span className="text-7xl">{p.emoji}</span>
                 )}

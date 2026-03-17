@@ -19,7 +19,7 @@ export interface Product {
   size: string;
   tag: string | null;
   emoji: string | null;
-  image_url: string | null;
+  imageUrl: string | null;
   active: boolean;
   created_at: string;
   updated_at: string;
