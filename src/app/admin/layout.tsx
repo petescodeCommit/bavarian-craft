@@ -20,6 +20,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           <Link href="/admin" className="block px-4 py-2.5 text-sm text-white/80 hover:bg-white/10 hover:text-white transition-colors rounded">Dashboard</Link>
           <Link href="/admin/produkte" className="block px-4 py-2.5 text-sm text-white/80 hover:bg-white/10 hover:text-white transition-colors rounded">Produkte</Link>
           <Link href="/admin/bestellungen" className="block px-4 py-2.5 text-sm text-white/80 hover:bg-white/10 hover:text-white transition-colors rounded">Bestellungen</Link>
+          <Link href="/admin/anfragen" className="block px-4 py-2.5 text-sm text-white/80 hover:bg-white/10 hover:text-white transition-colors rounded">Design-Anfragen</Link>
           <div className="border-t border-white/10 mt-4 pt-4">
             <Link href="/" className="block px-4 py-2.5 text-sm text-white/50 hover:text-white transition-colors">← Zum Shop</Link>
           </div>

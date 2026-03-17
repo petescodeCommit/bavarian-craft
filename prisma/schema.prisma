@@ -92,3 +92,23 @@ enum UserRole {
   CUSTOMER
   ADMIN
 }
+
+model CustomRequest {
+  id           Int           @id @default(autoincrement())
+  name         String
+  email        String
+  vehicle      String
+  designWish   String
+  status       RequestStatus @default(OPEN)
+  adminNotes   String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@map("custom_requests")
+}
+
+enum RequestStatus {
+  OPEN
+  IN_PROGRESS
+  DONE
+}
