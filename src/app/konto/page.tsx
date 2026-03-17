@@ -1,31 +1,35 @@
 export const dynamic = "force-dynamic";
+
 import { createClient } from "@/lib/supabase/server";
-import { prisma } from "@/lib/prisma";
+import { getAdminDb } from "@/lib/db";
 import { redirect } from "next/navigation";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = { title: "Mein Konto" };
+
+const statusLabel: Record<string, string> = {
+  PENDING: "Ausstehend", PAID: "Bezahlt", PROCESSING: "In Bearbeitung",
+  SHIPPED: "Versendet", DELIVERED: "Geliefert", CANCELLED: "Storniert",
+};
+const statusColor: Record<string, string> = {
+  PENDING: "bg-yellow-100 text-yellow-800", PAID: "bg-blue-100 text-blue-800",
+  PROCESSING: "bg-orange-100 text-orange-800", SHIPPED: "bg-purple-100 text-purple-800",
+  DELIVERED: "bg-green-100 text-green-800", CANCELLED: "bg-red-100 text-red-800",
+};
 
 export default async function KontoPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) redirect("/auth/login");
 
-  const orders = await prisma.order.findMany({
-    where: { userId: user.id },
-    include: { orderItems: { include: { product: true } } },
-    orderBy: { createdAt: "desc" },
-  });
+  const db = getAdminDb();
+  const { data: ordersRaw } = await db
+    .from("orders")
+    .select("*, order_items(*, products(name))")
+    .eq("user_id", user.id)
+    .order("created_at", { ascending: false });
 
-  const statusLabel: Record<string, string> = {
-    PENDING: "Ausstehend", PAID: "Bezahlt", PROCESSING: "In Bearbeitung",
-    SHIPPED: "Versendet", DELIVERED: "Geliefert", CANCELLED: "Storniert",
-  };
-  const statusColor: Record<string, string> = {
-    PENDING: "bg-yellow-100 text-yellow-800", PAID: "bg-blue-100 text-blue-800",
-    PROCESSING: "bg-orange-100 text-orange-800", SHIPPED: "bg-purple-100 text-purple-800",
-    DELIVERED: "bg-green-100 text-green-800", CANCELLED: "bg-red-100 text-red-800",
-  };
+  const orders = ordersRaw ?? [];
 
   return (
     <div className="py-16 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -41,46 +45,44 @@ export default async function KontoPage() {
         </form>
       </div>
 
-      <div className="bg-white border border-bc-border p-6 mb-6">
+      <div className="bg-white border border-bc-border p-6 mb-8">
         <h2 className="font-bold text-lg mb-1">Kontodaten</h2>
         <p className="text-bc-muted text-sm">{user.email}</p>
       </div>
 
-      <div>
-        <h2 className="font-bold text-xl mb-5">Bestellungen</h2>
-        {orders.length === 0 ? (
-          <div className="bg-white border border-bc-border p-10 text-center text-bc-muted">
-            Du hast noch keine Bestellungen.
-          </div>
-        ) : (
-          <div className="space-y-4">
-            {orders.map((order) => (
-              <div key={order.id} className="bg-white border border-bc-border p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <div>
-                    <div className="font-bold">Bestellung #{order.orderNumber}</div>
-                    <div className="text-bc-muted text-sm">{new Date(order.createdAt).toLocaleDateString("de-DE")}</div>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <span className={`text-xs font-semibold px-3 py-1 rounded-full ${statusColor[order.status]}`}>
-                      {statusLabel[order.status]}
-                    </span>
-                    <span className="font-bold text-lg">{Number(order.totalAmount).toFixed(2).replace(".", ",")} €</span>
-                  </div>
+      <h2 className="font-bold text-xl mb-5">Bestellungen</h2>
+      {orders.length === 0 ? (
+        <div className="bg-white border border-bc-border p-10 text-center text-bc-muted">
+          Du hast noch keine Bestellungen.
+        </div>
+      ) : (
+        <div className="space-y-4">
+          {orders.map((order: any) => (
+            <div key={order.id} className="bg-white border border-bc-border p-6">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <div className="font-bold">Bestellung #{order.order_number}</div>
+                  <div className="text-bc-muted text-sm">{new Date(order.created_at).toLocaleDateString("de-DE")}</div>
                 </div>
-                <div className="space-y-2 border-t border-bc-border pt-4">
-                  {order.orderItems.map((item) => (
-                    <div key={item.id} className="flex justify-between text-sm">
-                      <span className="text-bc-muted">{item.product.name} · {item.vehicle} · {item.backLine1}</span>
-                      <span>{Number(item.price).toFixed(2).replace(".", ",")} €</span>
-                    </div>
-                  ))}
+                <div className="flex items-center gap-4">
+                  <span className={`text-xs font-semibold px-3 py-1 rounded-full ${statusColor[order.status] ?? "bg-gray-100 text-gray-700"}`}>
+                    {statusLabel[order.status] ?? order.status}
+                  </span>
+                  <span className="font-bold text-lg">{Number(order.total_amount).toFixed(2).replace(".", ",")} €</span>
                 </div>
               </div>
-            ))}
-          </div>
-        )}
-      </div>
+              <div className="space-y-2 border-t border-bc-border pt-4">
+                {order.order_items?.map((item: any) => (
+                  <div key={item.id} className="flex justify-between text-sm">
+                    <span className="text-bc-muted">{item.products?.name} · {item.vehicle} · {item.back_line1}</span>
+                    <span>{Number(item.price).toFixed(2).replace(".", ",")} €</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

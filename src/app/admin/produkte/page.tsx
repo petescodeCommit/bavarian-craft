@@ -1,9 +1,12 @@
 export const dynamic = "force-dynamic";
-import { prisma } from "@/lib/prisma";
+
+import { getAdminDb } from "@/lib/db";
 import Link from "next/link";
 
 export default async function AdminProduktePage() {
-  const products = await prisma.product.findMany({ orderBy: { id: "asc" } });
+  const db = getAdminDb();
+  const { data: productsRaw } = await db.from("products").select("*").order("id");
+  const products = productsRaw ?? [];
 
   return (
     <div>
@@ -13,7 +16,6 @@ export default async function AdminProduktePage() {
           + Neues Produkt
         </Link>
       </div>
-
       <div className="bg-white border border-gray-200">
         <table className="w-full text-sm">
           <thead>
@@ -30,8 +32,8 @@ export default async function AdminProduktePage() {
             {products.map((p) => (
               <tr key={p.id} className="hover:bg-gray-50">
                 <td className="p-4">
-                  {p.imageUrl ? (
-                    <img src={p.imageUrl} alt={p.name} className="w-12 h-12 object-cover" />
+                  {p.image_url ? (
+                    <img src={p.image_url} alt={p.name} className="w-12 h-12 object-cover" />
                   ) : (
                     <div className="w-12 h-12 bg-bc-cream flex items-center justify-center text-2xl">{p.emoji}</div>
                   )}

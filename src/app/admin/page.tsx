@@ -1,24 +1,24 @@
 export const dynamic = "force-dynamic";
-import { prisma } from "@/lib/prisma";
+
+import { getAdminDb } from "@/lib/db";
 import Link from "next/link";
 
 export default async function AdminDashboard() {
-  const [productCount, orderCount, revenue] = await Promise.all([
-    prisma.product.count({ where: { active: true } }),
-    prisma.order.count(),
-    prisma.order.aggregate({ _sum: { totalAmount: true }, where: { status: { in: ["PAID", "SHIPPED", "DELIVERED"] } } }),
+  const db = getAdminDb();
+
+  const [{ count: productCount }, { count: orderCount }, { data: revenue }, { data: recentOrders }] = await Promise.all([
+    db.from("products").select("*", { count: "exact", head: true }).eq("active", true),
+    db.from("orders").select("*", { count: "exact", head: true }),
+    db.from("orders").select("total_amount").in("status", ["PAID", "SHIPPED", "DELIVERED"]),
+    db.from("orders").select("*, order_items(*, products(*))").order("created_at", { ascending: false }).limit(5),
   ]);
 
-  const recentOrders = await prisma.order.findMany({
-    take: 5,
-    orderBy: { createdAt: "desc" },
-    include: { orderItems: { include: { product: true } } },
-  });
+  const totalRevenue = (revenue ?? []).reduce((sum, o) => sum + Number(o.total_amount), 0);
 
   const stats = [
-    { label: "Aktive Produkte", value: productCount, href: "/admin/produkte" },
-    { label: "Bestellungen gesamt", value: orderCount, href: "/admin/bestellungen" },
-    { label: "Umsatz", value: `${Number(revenue._sum.totalAmount ?? 0).toFixed(2).replace(".", ",")} €`, href: "/admin/bestellungen" },
+    { label: "Aktive Produkte", value: productCount ?? 0, href: "/admin/produkte" },
+    { label: "Bestellungen gesamt", value: orderCount ?? 0, href: "/admin/bestellungen" },
+    { label: "Umsatz", value: `${totalRevenue.toFixed(2).replace(".", ",")} €`, href: "/admin/bestellungen" },
   ];
 
   return (
@@ -38,7 +38,7 @@ export default async function AdminDashboard() {
           <h2 className="font-bold text-lg">Letzte Bestellungen</h2>
           <Link href="/admin/bestellungen" className="text-sm text-bc-brown hover:underline">Alle ansehen</Link>
         </div>
-        {recentOrders.length === 0 ? (
+        {!recentOrders?.length ? (
           <p className="text-bc-muted text-sm">Noch keine Bestellungen.</p>
         ) : (
           <table className="w-full text-sm">
@@ -51,12 +51,12 @@ export default async function AdminDashboard() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
-              {recentOrders.map((o) => (
+              {recentOrders.map((o: any) => (
                 <tr key={o.id}>
-                  <td className="py-3 font-mono text-xs">#{o.orderNumber}</td>
-                  <td className="py-3">{o.orderItems[0]?.product.name}</td>
+                  <td className="py-3 font-mono text-xs">#{o.order_number}</td>
+                  <td className="py-3">{o.order_items?.[0]?.products?.name}</td>
                   <td className="py-3"><span className="bg-gray-100 px-2 py-0.5 text-xs">{o.status}</span></td>
-                  <td className="py-3 text-right font-semibold">{Number(o.totalAmount).toFixed(2).replace(".", ",")} €</td>
+                  <td className="py-3 text-right font-semibold">{Number(o.total_amount).toFixed(2).replace(".", ",")} €</td>
                 </tr>
               ))}
             </tbody>

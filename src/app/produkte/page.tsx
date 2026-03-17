@@ -1,12 +1,12 @@
+export const dynamic = "force-dynamic";
+
 import Link from "next/link";
 import type { Metadata } from "next";
-export const dynamic = "force-dynamic";
-import { prisma } from "@/lib/prisma";
+import { getAdminDb } from "@/lib/db";
 
 export const metadata: Metadata = {
   title: "Leder-Schlüsselanhänger für Fahrzeuge",
-  description:
-    "Alle Leder-Schlüsselanhänger von Bavarian Craft – Klassiker, Premium und Vintage. Mit Fahrzeug-Motiv und persönlicher Gravur auf der Rückseite.",
+  description: "Alle Leder-Schlüsselanhänger von Bavarian Craft – Klassiker, Premium und Vintage. Mit Fahrzeug-Motiv und persönlicher Gravur auf der Rückseite.",
 };
 
 const vehicles = [
@@ -18,10 +18,14 @@ const vehicles = [
 ];
 
 export default async function ProduktePage() {
-  const products = await prisma.product.findMany({
-    where: { active: true },
-    orderBy: { id: "asc" },
-  });
+  const db = getAdminDb();
+  const { data: productsRaw } = await db
+    .from("products")
+    .select("*")
+    .eq("active", true)
+    .order("id");
+
+  const products = productsRaw ?? [];
 
   return (
     <div className="py-16">
@@ -39,8 +43,12 @@ export default async function ProduktePage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
           {products.map((p) => (
             <div key={p.id} className="card group">
-              <div className="bg-bc-cream h-52 flex items-center justify-center text-7xl group-hover:scale-105 transition-transform duration-500">
-                {p.emoji}
+              <div className="bg-bc-cream h-52 flex items-center justify-center overflow-hidden group-hover:scale-105 transition-transform duration-500">
+                {p.image_url ? (
+                  <img src={p.image_url} alt={p.name} className="w-full h-full object-cover" />
+                ) : (
+                  <span className="text-7xl">{p.emoji}</span>
+                )}
               </div>
               <div className="p-6">
                 <div className="flex items-center justify-between mb-1">
@@ -62,7 +70,7 @@ export default async function ProduktePage() {
 
         <div className="bg-white border border-bc-border p-8">
           <h2 className="font-bold text-xl mb-4">Verfügbare Fahrzeug-Motive</h2>
-          <p className="text-bc-muted text-sm mb-6">Wir bieten Designs für alle gängigen Marken – darunter:</p>
+          <p className="text-bc-muted text-sm mb-6">Wir bieten Designs für alle gängigen Marken:</p>
           <div className="flex flex-wrap gap-2">
             {vehicles.map((v) => (
               <Link key={v} href={`/konfigurieren?fahrzeug=${encodeURIComponent(v)}`}

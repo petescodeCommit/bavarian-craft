@@ -1,5 +1,6 @@
 export const dynamic = "force-dynamic";
-import { prisma } from "@/lib/prisma";
+
+import { getAdminDb } from "@/lib/db";
 
 const statusLabel: Record<string, string> = {
   PENDING: "Ausstehend", PAID: "Bezahlt", PROCESSING: "In Bearbeitung",
@@ -12,10 +13,13 @@ const statusColor: Record<string, string> = {
 };
 
 export default async function AdminBestellungenPage() {
-  const orders = await prisma.order.findMany({
-    orderBy: { createdAt: "desc" },
-    include: { orderItems: { include: { product: true } } },
-  });
+  const db = getAdminDb();
+  const { data: ordersRaw } = await db
+    .from("orders")
+    .select("*, order_items(*, products(name))")
+    .order("created_at", { ascending: false });
+
+  const orders = ordersRaw ?? [];
 
   return (
     <div>
@@ -36,26 +40,26 @@ export default async function AdminBestellungenPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
-              {orders.map((o) => (
+              {orders.map((o: any) => (
                 <tr key={o.id} className="hover:bg-gray-50">
-                  <td className="p-4 font-mono text-xs">#{o.orderNumber}</td>
-                  <td className="p-4 text-bc-muted">{new Date(o.createdAt).toLocaleDateString("de-DE")}</td>
+                  <td className="p-4 font-mono text-xs">#{o.order_number}</td>
+                  <td className="p-4 text-bc-muted">{new Date(o.created_at).toLocaleDateString("de-DE")}</td>
                   <td className="p-4">
-                    {o.orderItems.map((item, i) => (
+                    {o.order_items?.map((item: any, i: number) => (
                       <div key={i} className="text-xs">
-                        {item.product.name} · {item.vehicle} · <span className="text-bc-muted">{item.backLine1}</span>
+                        {item.products?.name} · {item.vehicle} · <span className="text-bc-muted">{item.back_line1}</span>
                       </div>
                     ))}
                   </td>
                   <td className="p-4 text-xs text-bc-muted">
-                    {o.shippingName}<br />{o.shippingZip} {o.shippingCity}
+                    {o.shipping_name}<br />{o.shipping_zip} {o.shipping_city}
                   </td>
                   <td className="p-4">
-                    <span className={`px-2 py-0.5 text-xs font-semibold rounded-full ${statusColor[o.status]}`}>
-                      {statusLabel[o.status]}
+                    <span className={`px-2 py-0.5 text-xs font-semibold rounded-full ${statusColor[o.status] ?? "bg-gray-100 text-gray-700"}`}>
+                      {statusLabel[o.status] ?? o.status}
                     </span>
                   </td>
-                  <td className="p-4 text-right font-bold">{Number(o.totalAmount).toFixed(2).replace(".", ",")} €</td>
+                  <td className="p-4 text-right font-bold">{Number(o.total_amount).toFixed(2).replace(".", ",")} €</td>
                 </tr>
               ))}
             </tbody>
