@@ -8,7 +8,6 @@ const products = [
     price: "19,90 €",
     emoji: "🪵",
     tag: "Bestseller",
-    tagColor: "bg-yellow-100 text-yellow-800",
   },
   {
     id: 2,
@@ -17,7 +16,6 @@ const products = [
     price: "24,90 €",
     emoji: "🟫",
     tag: "Neu",
-    tagColor: "bg-green-100 text-green-800",
   },
   {
     id: 3,
@@ -26,48 +24,42 @@ const products = [
     price: "22,90 €",
     emoji: "🏰",
     tag: "Beliebt",
-    tagColor: "bg-blue-100 text-blue-800",
   },
 ];
 
 export default function FeaturedProducts() {
   return (
-    <section className="py-20 bg-white">
+    <section className="py-24 bg-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="section-title">Unsere beliebtesten Modelle</h2>
-          <p className="text-gray-500 text-lg max-w-xl mx-auto">
-            Jeder Anhänger wird individuell für dich gefertigt – mit Liebe zum
-            Detail und bayerischer Handwerkskunst.
-          </p>
+        <div className="flex items-end justify-between mb-14">
+          <div>
+            <p className="text-bavarian-copper text-xs font-semibold tracking-widest uppercase mb-3">Unsere Modelle</p>
+            <h2 className="section-title mb-0">Beliebteste Designs</h2>
+          </div>
+          <Link href="/produkte" className="hidden md:block text-sm text-gray-400 hover:text-bavarian-black tracking-wide transition-colors">
+            Alle ansehen →
+          </Link>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {products.map((product) => (
             <div key={product.id} className="card group">
-              {/* Product image placeholder */}
-              <div className="bg-bavarian-cream h-52 flex items-center justify-center text-7xl group-hover:scale-110 transition-transform duration-300">
+              <div className="bg-gray-50 h-56 flex items-center justify-center text-7xl group-hover:scale-105 transition-transform duration-500">
                 {product.emoji}
               </div>
               <div className="p-6">
                 <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-bold text-xl">{product.name}</h3>
-                  <span
-                    className={`text-xs font-semibold px-2 py-1 rounded-full ${product.tagColor}`}
-                  >
+                  <h3 className="font-bold text-lg tracking-tight">{product.name}</h3>
+                  <span className="text-xs font-semibold text-bavarian-copper tracking-wide">
                     {product.tag}
                   </span>
                 </div>
-                <p className="text-gray-500 text-sm mb-4">
-                  {product.description}
-                </p>
+                <p className="text-gray-400 text-sm mb-6 leading-relaxed">{product.description}</p>
                 <div className="flex items-center justify-between">
-                  <span className="text-2xl font-bold text-bavarian-blue">
-                    {product.price}
-                  </span>
+                  <span className="text-xl font-bold">{product.price}</span>
                   <Link
                     href={`/konfigurieren?modell=${product.id}`}
-                    className="btn-primary text-sm"
+                    className="bg-bavarian-black text-white px-4 py-2 text-sm font-semibold tracking-wide hover:bg-bavarian-copper transition-colors"
                   >
                     Gestalten
                   </Link>
@@ -77,10 +69,8 @@ export default function FeaturedProducts() {
           ))}
         </div>
 
-        <div className="text-center mt-10">
-          <Link href="/produkte" className="btn-secondary">
-            Alle Produkte ansehen
-          </Link>
+        <div className="text-center mt-10 md:hidden">
+          <Link href="/produkte" className="btn-secondary text-sm">Alle Produkte ansehen</Link>
         </div>
       </div>
     </section>

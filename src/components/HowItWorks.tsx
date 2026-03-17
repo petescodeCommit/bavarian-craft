@@ -1,61 +1,41 @@
 const steps = [
   {
-    step: "1",
+    step: "01",
     title: "Modell wählen",
-    description:
-      "Wähle aus Holz, Leder oder unserem Bayern-Wappen-Design das passende Modell.",
-    icon: "🎨",
+    description: "Wähle aus Holz, Leder oder unserem Bayern-Wappen-Design das passende Modell.",
   },
   {
-    step: "2",
+    step: "02",
     title: "Text eingeben",
-    description:
-      "Gib deinen Wunschtext, Namen oder ein Datum ein. Bis zu 2 Zeilen möglich.",
-    icon: "✍️",
+    description: "Gib deinen Wunschtext, Namen oder ein Datum ein. Bis zu 2 Zeilen möglich.",
   },
   {
-    step: "3",
+    step: "03",
     title: "Vorschau & Bestellen",
-    description:
-      "Sieh dir eine Echtzeit-Vorschau an und bestelle sicher mit Stripe.",
-    icon: "✅",
+    description: "Sieh dir eine Echtzeit-Vorschau an und bestelle sicher mit Stripe.",
   },
   {
-    step: "4",
+    step: "04",
     title: "Lieferung nach Hause",
-    description:
-      "Wir fertigen deinen Anhänger handgefertigt und liefern in 2–4 Werktagen.",
-    icon: "📦",
+    description: "Wir fertigen deinen Anhänger handgefertigt und liefern in 2–4 Werktagen.",
   },
 ];
 
 export default function HowItWorks() {
   return (
-    <section className="py-20 bg-bavarian-cream">
+    <section className="py-24 bg-bavarian-black text-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="section-title">So einfach geht's</h2>
-          <p className="text-gray-500 text-lg">
-            In vier Schritten zu deinem individuellen Schlüsselanhänger
-          </p>
+        <div className="mb-16">
+          <p className="text-bavarian-copper text-xs font-semibold tracking-widest uppercase mb-3">Prozess</p>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white">So einfach geht&apos;s</h2>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {steps.map((item, index) => (
-            <div key={index} className="text-center">
-              <div className="relative mb-4">
-                <div className="w-16 h-16 bg-bavarian-blue text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto">
-                  {item.step}
-                </div>
-                {index < steps.length - 1 && (
-                  <div className="hidden lg:block absolute top-8 left-full w-full h-0.5 bg-bavarian-blue/20 -translate-y-0.5" />
-                )}
-              </div>
-              <div className="text-4xl mb-3">{item.icon}</div>
-              <h3 className="font-bold text-lg mb-2">{item.title}</h3>
-              <p className="text-gray-500 text-sm leading-relaxed">
-                {item.description}
-              </p>
+            <div key={index}>
+              <div className="text-bavarian-copper text-4xl font-bold mb-4 tracking-tight">{item.step}</div>
+              <h3 className="font-bold text-lg mb-2 tracking-tight">{item.title}</h3>
+              <p className="text-gray-400 text-sm leading-relaxed">{item.description}</p>
             </div>
           ))}
         </div>

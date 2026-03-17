@@ -10,11 +10,14 @@ const config: Config = {
     extend: {
       colors: {
         bavarian: {
-          blue: "#0057A8",
-          white: "#FFFFFF",
-          cream: "#F5F0E8",
-          wood: "#8B6914",
-          dark: "#1A1A2E",
+          black: "#0A0A0A",
+          dark: "#141414",
+          surface: "#1E1E1E",
+          white: "#FAFAFA",
+          gray: "#888888",
+          copper: "#C47722",
+          "copper-light": "#D4924A",
+          "copper-dark": "#A0601A",
         },
       },
       fontFamily: {

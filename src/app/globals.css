@@ -8,24 +8,24 @@
   }
 
   body {
-    @apply bg-bavarian-cream text-bavarian-dark;
+    @apply bg-white text-bavarian-black;
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-bavarian-blue text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200;
+    @apply bg-bavarian-black text-bavarian-white px-6 py-3 rounded-none font-semibold tracking-wide hover:bg-bavarian-copper transition-colors duration-200;
   }
 
   .btn-secondary {
-    @apply border-2 border-bavarian-blue text-bavarian-blue px-6 py-3 rounded-lg font-semibold hover:bg-bavarian-blue hover:text-white transition-colors duration-200;
+    @apply border border-bavarian-black text-bavarian-black px-6 py-3 rounded-none font-semibold tracking-wide hover:bg-bavarian-black hover:text-white transition-colors duration-200;
   }
 
   .section-title {
-    @apply text-3xl md:text-4xl font-bold font-serif text-bavarian-dark mb-4;
+    @apply text-3xl md:text-4xl font-bold tracking-tight text-bavarian-black mb-4;
   }
 
   .card {
-    @apply bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden;
+    @apply bg-white border border-gray-100 hover:border-bavarian-copper transition-colors duration-300 overflow-hidden;
   }
 }
