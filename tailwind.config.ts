@@ -10,18 +10,18 @@ const config: Config = {
     extend: {
       colors: {
         bc: {
-          cream: "#FBF7F2",
-          "cream-dark": "#F2EBE0",
+          cream: "#F5F9F6",
+          "cream-dark": "#E8F2EB",
           white: "#FFFFFF",
-          brown: "#6B3A2A",
-          "brown-light": "#8B5240",
-          "brown-dark": "#4A2518",
+          brown: "#1D5C3A",
+          "brown-light": "#2E7A50",
+          "brown-dark": "#0E3522",
           gold: "#C9943A",
           "gold-light": "#DDB05A",
           "gold-dark": "#A87828",
-          text: "#1C0E08",
-          muted: "#7A5C50",
-          border: "#E2D0C0",
+          text: "#0A1F13",
+          muted: "#3D6B52",
+          border: "#C2D9CB",
         },
       },
       fontFamily: {
