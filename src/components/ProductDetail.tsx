@@ -76,7 +76,7 @@ export default function ProductDetail({ product }: { product: Product }) {
 
           {/* Image slideshow */}
           <div>
-            <div className="bg-bc-cream w-full aspect-square flex items-center justify-center overflow-hidden relative">
+            <div className="bg-bc-cream w-full aspect-square flex items-center justify-center overflow-hidden">
               {images.length > 0 ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
@@ -87,28 +87,17 @@ export default function ProductDetail({ product }: { product: Product }) {
               ) : (
                 <span className="text-8xl sm:text-9xl">{product.emoji}</span>
               )}
-              {images.length > 1 && (
-                <>
-                  <button
-                    onClick={() => setImgIndex((i) => (i - 1 + images.length) % images.length)}
-                    className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white w-8 h-8 flex items-center justify-center text-bc-text transition-colors"
-                    aria-label="Vorheriges Bild"
-                  >
-                    ‹
-                  </button>
-                  <button
-                    onClick={() => setImgIndex((i) => (i + 1) % images.length)}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white w-8 h-8 flex items-center justify-center text-bc-text transition-colors"
-                    aria-label="Nächstes Bild"
-                  >
-                    ›
-                  </button>
-                </>
-              )}
             </div>
-            {/* Thumbnails */}
+            {/* Thumbnails + nav */}
             {images.length > 1 && (
-              <div className="flex gap-2 mt-2">
+              <div className="flex items-center gap-2 mt-2">
+                <button
+                  onClick={() => setImgIndex((i) => (i - 1 + images.length) % images.length)}
+                  className="w-8 h-8 flex-shrink-0 border border-bc-border flex items-center justify-center text-bc-muted hover:border-bc-brown hover:text-bc-text transition-colors"
+                  aria-label="Vorheriges Bild"
+                >
+                  ‹
+                </button>
                 {images.map((img, i) => (
                   <button
                     key={i}
@@ -121,6 +110,13 @@ export default function ProductDetail({ product }: { product: Product }) {
                     <img src={img.src} alt={img.alt} className={`w-full h-full ${i === images.length - 1 ? "object-contain p-1" : "object-cover"}`} />
                   </button>
                 ))}
+                <button
+                  onClick={() => setImgIndex((i) => (i + 1) % images.length)}
+                  className="w-8 h-8 flex-shrink-0 border border-bc-border flex items-center justify-center text-bc-muted hover:border-bc-brown hover:text-bc-text transition-colors"
+                  aria-label="Nächstes Bild"
+                >
+                  ›
+                </button>
               </div>
             )}
           </div>
