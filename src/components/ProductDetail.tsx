@@ -50,58 +50,62 @@ export default function ProductDetail({ product }: { product: Product }) {
   }
 
   return (
-    <div className="py-16">
+    <div className="py-8 sm:py-14">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* Back link */}
-        <Link href="/produkte" className="text-sm text-bc-muted hover:text-bc-text mb-8 block">
+        {/* Back */}
+        <Link href="/produkte" className="inline-flex items-center gap-1 text-sm text-bc-muted hover:text-bc-text mb-6 sm:mb-8">
           ← Alle Modelle
         </Link>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
 
           {/* Image */}
-          <div className="bg-bc-cream aspect-square flex items-center justify-center overflow-hidden">
+          <div className="bg-bc-cream w-full aspect-square flex items-center justify-center overflow-hidden">
             {product.imageUrl ? (
               <img src={product.imageUrl} alt={product.name} className="w-full h-full object-cover" />
             ) : (
-              <span className="text-9xl">{product.emoji}</span>
+              <span className="text-8xl sm:text-9xl">{product.emoji}</span>
             )}
           </div>
 
-          {/* Info + configurator */}
-          <div className="space-y-6">
-            <div>
+          {/* Right column */}
+          <div>
+            {/* Header */}
+            <div className="mb-4">
               {product.tag && (
-                <span className="text-xs font-bold text-bc-gold tracking-widest uppercase">{product.tag}</span>
+                <span className="inline-block text-[11px] font-bold text-white bg-bc-brown px-2 py-0.5 tracking-widest uppercase mb-2">
+                  {product.tag}
+                </span>
               )}
-              <h1 className="text-3xl font-bold mt-1 mb-2">{product.name}</h1>
+              <h1 className="text-2xl sm:text-3xl font-bold leading-tight mb-1">{product.name}</h1>
               <div className="text-sm text-bc-muted">{product.material} · {product.size}</div>
             </div>
 
-            <p className="text-bc-muted leading-relaxed">{product.description}</p>
+            {/* Price */}
+            <div className="text-2xl sm:text-3xl font-bold mb-4">
+              {Number(product.price).toFixed(2).replace(".", ",")} €
+            </div>
 
-            <div className="text-3xl font-bold">{Number(product.price).toFixed(2).replace(".", ",")} €</div>
+            {/* Description */}
+            <p className="text-bc-muted text-sm leading-relaxed mb-6 whitespace-pre-line">
+              {product.description}
+            </p>
 
-            <div className="border-t border-bc-border pt-6 space-y-5">
+            <div className="border-t border-bc-border pt-5 space-y-5">
 
               {/* Size */}
               {sizeOptions.length > 1 && (
                 <div>
                   <div className="text-xs font-semibold text-bc-muted tracking-wide mb-2">
-                    Größe: <span className="text-bc-text font-bold">{selectedSize}</span>
+                    Größe: <span className="text-bc-text">{selectedSize}</span>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {sizeOptions.map((s) => (
-                      <button
-                        key={s}
-                        onClick={() => setSelectedSize(s)}
+                      <button key={s} onClick={() => setSelectedSize(s)}
                         className={`px-3 py-1.5 text-sm border transition-colors ${
-                          selectedSize === s
-                            ? "border-bc-brown bg-bc-brown text-white"
-                            : "border-bc-border text-bc-muted hover:border-bc-brown"
-                        }`}
-                      >
+                          selectedSize === s ? "border-bc-brown bg-bc-brown text-white" : "border-bc-border text-bc-muted hover:border-bc-brown"
+                        }`}>
                         {s}
                       </button>
                     ))}
@@ -113,19 +117,14 @@ export default function ProductDetail({ product }: { product: Product }) {
               {colorOptions.length > 0 && (
                 <div>
                   <div className="text-xs font-semibold text-bc-muted tracking-wide mb-2">
-                    Farbe: <span className="text-bc-text font-bold">{selectedColor}</span>
+                    Farbe: <span className="text-bc-text">{selectedColor}</span>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {colorOptions.map((c) => (
-                      <button
-                        key={c}
-                        onClick={() => setSelectedColor(c)}
+                      <button key={c} onClick={() => setSelectedColor(c)}
                         className={`px-3 py-1.5 text-sm border transition-colors ${
-                          selectedColor === c
-                            ? "border-bc-brown bg-bc-brown text-white"
-                            : "border-bc-border text-bc-muted hover:border-bc-brown"
-                        }`}
-                      >
+                          selectedColor === c ? "border-bc-brown bg-bc-brown text-white" : "border-bc-border text-bc-muted hover:border-bc-brown"
+                        }`}>
                         {c}
                       </button>
                     ))}
@@ -143,8 +142,8 @@ export default function ProductDetail({ product }: { product: Product }) {
                   value={backText}
                   onChange={(e) => setBackText(e.target.value)}
                   maxLength={30}
-                  placeholder="z.B. Max · BMW M3 · 2024"
-                  className="w-full border-2 border-bc-border px-4 py-3 focus:border-bc-brown focus:outline-none text-sm"
+                  placeholder="z.B. Max · 2024"
+                  className="w-full border border-bc-border px-4 py-3 text-sm focus:border-bc-brown focus:outline-none"
                 />
                 <div className="text-xs text-bc-muted mt-1 text-right">{backText.length}/30</div>
               </div>
@@ -153,28 +152,23 @@ export default function ProductDetail({ product }: { product: Product }) {
               <button
                 onClick={handleAdd}
                 disabled={added}
-                className={`w-full py-4 font-bold tracking-wide text-sm transition-colors ${
-                  added
-                    ? "bg-green-600 text-white"
-                    : "bg-bc-brown text-white hover:bg-bc-brown-dark"
+                className={`w-full py-3.5 font-bold tracking-wide text-sm transition-colors ${
+                  added ? "bg-green-600 text-white" : "bg-bc-brown text-white hover:bg-bc-brown-dark"
                 }`}
               >
-                {added ? "✓ Zum Warenkorb hinzugefügt" : "In den Warenkorb"}
+                {added ? "✓ Hinzugefügt" : "In den Warenkorb"}
               </button>
 
-              <Link
-                href="/warenkorb"
-                className="block text-center text-sm text-bc-muted hover:text-bc-text"
-              >
+              <Link href="/warenkorb" className="block text-center text-sm text-bc-muted hover:text-bc-text">
                 Zum Warenkorb →
               </Link>
             </div>
 
-            {/* Trust badges */}
-            <div className="border-t border-bc-border pt-5 space-y-2 text-sm text-bc-muted">
-              <div><span className="text-bc-gold mr-2">✓</span>Handgefertigt in Bayern</div>
-              <div><span className="text-bc-gold mr-2">✓</span>Kostenloser Versand ab 30 €</div>
-              <div><span className="text-bc-gold mr-2">✓</span>2–4 Werktage Lieferzeit</div>
+            {/* Trust */}
+            <div className="mt-6 pt-5 border-t border-bc-border grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs text-bc-muted">
+              <div><span className="text-bc-gold mr-1">✓</span>Handgefertigt</div>
+              <div><span className="text-bc-gold mr-1">✓</span>Versand ab 30 € frei</div>
+              <div><span className="text-bc-gold mr-1">✓</span>2–4 Werktage</div>
             </div>
           </div>
         </div>

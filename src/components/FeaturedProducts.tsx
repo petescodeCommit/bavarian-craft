@@ -1,4 +1,5 @@
 import Link from "next/link";
+// Homepage uses static data – synced with real products in /produkte
 
 const products = [
   {
@@ -29,37 +30,37 @@ const products = [
 
 export default function FeaturedProducts() {
   return (
-    <section className="py-24 bg-white">
+    <section className="py-16 sm:py-24 bg-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-end justify-between mb-14">
+        <div className="flex items-end justify-between mb-8 sm:mb-12">
           <div>
             <span className="label">Unsere Lederware</span>
             <h2 className="section-title mb-0">Beliebteste Modelle</h2>
           </div>
-          <Link href="/produkte" className="hidden md:block text-sm text-bc-muted hover:text-bc-text tracking-wide transition-colors">
-            Alle ansehen →
+          <Link href="/produkte" className="text-sm text-bc-muted hover:text-bc-text tracking-wide transition-colors">
+            Alle →
           </Link>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
           {products.map((p) => (
-            <div key={p.id} className="card group">
-              <div className="bg-bc-cream h-52 flex items-center justify-center text-7xl group-hover:scale-105 transition-transform duration-500">
+            <Link key={p.id} href="/produkte" className="group bg-white border border-bc-border hover:border-bc-brown transition-colors overflow-hidden">
+              <div className="bg-bc-cream h-44 sm:h-48 flex items-center justify-center text-6xl sm:text-7xl group-hover:scale-105 transition-transform duration-500">
                 {p.emoji}
               </div>
-              <div className="p-6">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-bold text-lg tracking-tight">{p.name}</h3>
-                  <span className="text-xs font-semibold text-bc-gold tracking-wide">{p.tag}</span>
+              <div className="p-4 sm:p-5">
+                <div className="flex items-center justify-between mb-1">
+                  <h3 className="font-bold text-base sm:text-lg">{p.name}</h3>
+                  <span className="text-xs font-bold text-bc-gold">{p.tag}</span>
                 </div>
-                <p className="text-bc-muted text-sm mb-6 leading-relaxed">{p.description}</p>
+                <p className="text-bc-muted text-sm mb-4 leading-relaxed line-clamp-2">{p.description}</p>
                 <div className="flex items-center justify-between">
-                  <span className="text-xl font-bold">{p.price}</span>
-                  <Link href={`/konfigurieren?modell=${p.id}`} className="bg-bc-brown text-white px-4 py-2 text-sm font-semibold hover:bg-bc-brown-dark transition-colors">
-                    Gestalten
-                  </Link>
+                  <span className="text-lg font-bold">{p.price}</span>
+                  <span className="text-xs font-semibold text-bc-brown bg-bc-cream px-3 py-1.5 group-hover:bg-bc-brown group-hover:text-white transition-colors">
+                    Ansehen →
+                  </span>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
