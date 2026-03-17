@@ -11,8 +11,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { data: product } = await db.from("products").select("*").eq("slug", slug).single();
   if (!product) return {};
   return {
-    title: product.name + " – Leder-Schlüsselanhänger",
-    description: product.description,
+    title: product.name + " | Handgefertigt in Bayern – Bavarian Craft",
+    description: product.description.slice(0, 155),
   };
 }
 
