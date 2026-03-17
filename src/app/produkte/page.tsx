@@ -1,9 +1,9 @@
 export const dynamic = "force-dynamic";
 
-import Link from "next/link";
 import type { Metadata } from "next";
+import Link from "next/link";
 import { getAdminDb } from "@/lib/db";
-import ProductCard from "@/components/ProductCard";
+import ProduktGrid from "@/components/ProduktGrid";
 
 export const metadata: Metadata = {
   title: "Leder-Schlüsselanhänger für Fahrzeuge",
@@ -31,23 +31,23 @@ export default async function ProduktePage() {
   return (
     <div className="py-16">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-14">
+
+        {/* Header */}
+        <div className="mb-12">
           <span className="text-bc-gold text-xs font-semibold tracking-widest uppercase mb-3 block">Lederware</span>
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
             Leder-Schlüsselanhänger<br />für dein Fahrzeug
           </h1>
           <p className="text-bc-muted text-lg max-w-2xl">
-            Handgefertigte Lederanhänger mit über 25 Fahrzeug-Motiven. Rückseite personalisiert mit deinem Namen oder Text.
+            Handgefertigt in Bayern. Wähle dein Modell und personalisiere es mit deinem Namen.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-          {products.map((p) => (
-            <ProductCard key={p.id} product={p} />
-          ))}
-        </div>
+        {/* Product grid with filter */}
+        <ProduktGrid products={products} />
 
-        <div className="bg-white border border-bc-border p-8">
+        {/* Vehicles */}
+        <div className="mt-20 bg-white border border-bc-border p-8">
           <h2 className="font-bold text-xl mb-4">Verfügbare Fahrzeug-Motive</h2>
           <p className="text-bc-muted text-sm mb-6">Wir bieten Designs für alle gängigen Marken:</p>
           <div className="flex flex-wrap gap-2">
@@ -59,6 +59,7 @@ export default async function ProduktePage() {
             ))}
           </div>
         </div>
+
       </div>
     </div>
   );
